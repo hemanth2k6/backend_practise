@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "title can not be empty!"
     });
     return;
   }
@@ -62,6 +62,17 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Tutorial with id=" + id
       });
     });
+};
+//find by id
+
+
+exports.findAll = (req, res) => {
+  const title = req.query.title;
+  const condition = title 
+    ? { title: { [Op.iLike]: `%${title}%` } } 
+    : null;
+
+  Tutorial.findAll({ where: condition })
 };
 
 // Update a Tutorial by the id in the request
